@@ -1,0 +1,215 @@
+﻿@model List<web.Models.Customer>
+
+@{
+    ViewData["Title"] = "客戶清單";
+}
+@{
+    var customers = ViewBag.Customers as List<Customer>;
+}
+
+<style>
+    .page-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 24px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-title {
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #222;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .btn-create {
+        display: inline-block;
+        padding: 10px 18px;
+        background-color: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+        .btn-create:hover {
+            background-color: #1d4ed8;
+            color: white;
+        }
+
+    .search-box {
+        padding: 10px 14px;
+        width: 260px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 14px;
+        outline: none;
+    }
+
+        .search-box:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+    .customer-table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+        .customer-table thead {
+            background-color: #f3f4f6;
+        }
+
+        .customer-table th {
+            text-align: left;
+            padding: 14px 16px;
+            font-size: 15px;
+            color: #333;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .customer-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+        }
+
+        .customer-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+            .customer-table tbody tr:hover {
+                background-color: #f9fafb;
+            }
+
+    .action-links a {
+        margin-right: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .link-detail {
+        color: #2563eb;
+    }
+
+    .link-edit {
+        color: #16a34a;
+    }
+
+    .link-delete {
+        color: #dc2626;
+    }
+
+    .action-links a:hover {
+        text-decoration: underline;
+    }
+
+    .empty-text {
+        text-align: center;
+        padding: 30px;
+        color: #888;
+    }
+
+    .badge-count {
+        display: inline-block;
+        padding: 6px 12px;
+        background-color: #eef2ff;
+        color: #3730a3;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="page-container">
+    <h2 class="page-title">客戶清單</h2>
+
+    <div class="top-bar">
+        <a class="btn-create" asp-controller="Home" asp-action="Create">＋ 新增客戶</a>
+
+        <div>
+            <input type="text" id="searchInput" class="search-box" placeholder="搜尋城市、名字、地址..." />
+            <span class="badge-count">共 @Model.Count 筆</span>
+        </div>
+    </div>
+
+    <table class="customer-table" id="customerTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>城市</th>
+                <th>名字</th>
+                <th>地址</th>
+                <th>功能</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.City</td>
+                        <td>@item.Name</td>
+                        <td>@item.Address</td>
+                        <td class="action-links">
+                            <a class="link-detail" asp-controller="Home" asp-action="Detail" asp-route-id="@item.Id">查看</a>
+                            <a class="link-edit" asp-controller="Home" asp-action="Edit" asp-route-id="@item.Id">修改</a>
+                            <a class="link-delete delete-link" asp-controller="Home" asp-action="Delete" asp-route-id="@item.Id">刪除</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="empty-text">目前沒有客戶資料</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // 搜尋功能
+    const searchInput = document.getElementById("searchInput");
+    const table = document.getElementById("customerTable");
+    const rows = table.querySelectorAll("tbody tr");
+
+    searchInput.addEventListener("keyup", function () {
+        const keyword = this.value.toLowerCase();
+
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(keyword) ? "" : "none";
+        });
+    });
+
+    // 刪除前確認
+    const deleteLinks = document.querySelectorAll(".delete-link");
+
+    deleteLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            const ok = confirm("你確定要刪除這筆客戶資料嗎？");
+            if (!ok) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

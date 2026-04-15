@@ -1,0 +1,136 @@
+﻿@model web.Models.Customer
+
+@{
+    ViewData["Title"] = "修改客戶";
+}
+
+<style>
+    .form-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 32px;
+        background-color: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-title {
+        margin-bottom: 24px;
+        font-size: 30px;
+        font-weight: 700;
+        color: #1f2937;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        font-size: 15px;
+        outline: none;
+        box-sizing: border-box;
+        transition: 0.2s;
+    }
+
+        .form-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+    .form-input-readonly {
+        background-color: #f9fafb;
+        color: #6b7280;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+    }
+
+    .btn-submit {
+        border: none;
+        padding: 12px 20px;
+        border-radius: 12px;
+        background-color: #2563eb;
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+    .btn-back {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 12px;
+        background-color: #f3f4f6;
+        color: #374151;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+        .btn-back:hover {
+            background-color: #e5e7eb;
+            color: #111827;
+        }
+
+    .form-tip {
+        margin-top: -8px;
+        margin-bottom: 18px;
+        color: #6b7280;
+        font-size: 13px;
+    }
+</style>
+
+<div class="form-container">
+    <h2 class="form-title">修改客戶</h2>
+
+    <form asp-controller="Home" asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label class="form-label">Id</label>
+            <input asp-for="Id" class="form-input form-input-readonly" readonly />
+            <div class="form-tip">Id 為識別欄位，通常不建議直接修改。</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">城市</label>
+            <input asp-for="City" class="form-input" placeholder="請輸入城市" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">名字</label>
+            <input asp-for="Name" class="form-input" placeholder="請輸入名字" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">地址</label>
+            <input asp-for="Address" class="form-input" placeholder="請輸入地址" />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">送出修改</button>
+            <a asp-controller="Home" asp-action="Customer" class="btn-back">回清單</a>
+        </div>
+    </form>
+</div>

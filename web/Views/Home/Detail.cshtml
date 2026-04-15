@@ -1,0 +1,121 @@
+﻿@model web.Models.Customer
+
+@{
+    ViewData["Title"] = "客戶詳細資料";
+}
+
+<style>
+    .detail-container {
+        max-width: 720px;
+        margin: 50px auto;
+        padding: 32px;
+        background-color: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .detail-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 28px;
+    }
+
+    .detail-card {
+        display: grid;
+        gap: 16px;
+    }
+
+    .detail-row {
+        display: flex;
+        align-items: center;
+        padding: 14px 16px;
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+    }
+
+    .detail-label {
+        width: 90px;
+        font-weight: 700;
+        color: #374151;
+        flex-shrink: 0;
+    }
+
+    .detail-value {
+        color: #111827;
+        font-size: 16px;
+    }
+
+    .detail-actions {
+        margin-top: 28px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn-back {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 12px;
+        background-color: #f3f4f6;
+        color: #374151;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+        .btn-back:hover {
+            background-color: #e5e7eb;
+            color: #111827;
+        }
+
+    .btn-edit {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 12px;
+        background-color: #2563eb;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+        .btn-edit:hover {
+            background-color: #1d4ed8;
+            color: white;
+        }
+</style>
+
+<div class="detail-container">
+    <h2 class="detail-title">客戶詳細資料</h2>
+
+    <div class="detail-card">
+        <div class="detail-row">
+            <div class="detail-label">Id</div>
+            <div class="detail-value">@Model.Id</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-label">城市</div>
+            <div class="detail-value">@Model.City</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-label">名字</div>
+            <div class="detail-value">@Model.Name</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-label">地址</div>
+            <div class="detail-value">@Model.Address</div>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a asp-controller="Home" asp-action="Customer" class="btn-back">回客戶清單</a>
+        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit">修改資料</a>
+    </div>
+</div>
